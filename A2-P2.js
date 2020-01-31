@@ -232,7 +232,7 @@ new THREE.SourceLoader().load(shaderFiles, function(shaders) {
 });
 
 // LOAD OBJECTS
-// loadOBJ('obj/wizard.obj', wizardMaterial, 1.0, 0.0, 0.0, -8.0, 0.0, 0.0, 0.0);
+loadOBJ('obj/wizard.obj', wizardMaterial, 1.0, 0.0, 0.0, -8.0, 0.0, 0.0, 0.0);
 loadOBJ('obj/eye.obj', leftEyeMaterial, 0.5, 0, 0, 0, 0, 0, 0);
 loadOBJ('obj/eye.obj', rightEyeMaterial, 0.5, 0, 0, 0, 0, 0, 0);
 
