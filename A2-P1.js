@@ -113,6 +113,7 @@ var magicPosition = {type: 'v3', value: new THREE.Vector3(0.0, 0.0, 0.0)};
 var offsetLEye = {type: 'v3', value: new THREE.Vector3(-0.6, 9.0, -6.5)};
 var offsetREye = {type: 'v3', value: new THREE.Vector3(0.6, 9.0, -6.5)};
 var offsetWand = {type: 'v3', value: new THREE.Vector3(-2.5, 7.9, -6.4)};
+var magicActive = {type: 'b', value: false};
 
 // MATERIALS: specifying uniforms and shaders
 var wizardMaterial = new THREE.ShaderMaterial({});
@@ -132,8 +133,26 @@ var scorchMaterial = new THREE.ShaderMaterial({
 });
 
 // EYES MATERIAL: offsetLEye and offsetREye should be used to position each eye
-var leftEyeMaterial = new THREE.ShaderMaterial({});
-var rightEyeMaterial = new THREE.ShaderMaterial({});
+var leftEyeMaterial = new THREE.ShaderMaterial({
+	uniforms: {
+		offset: offsetLEye,
+		magicPosition: magicPosition,
+	}
+});
+var rightEyeMaterial = new THREE.ShaderMaterial({
+	uniforms: {
+		offset: offsetREye,
+		magicPosition: magicPosition,
+	}
+});
+
+var laserMaterial = new THREE.ShaderMaterial({
+	uniforms: {
+		offset: offsetWand,
+		magicActive,
+		magicPosition,
+	}
+})
 
 // LOAD SHADERS
 // ADD SHADERS FOR LASER, EYES, WIZARD
@@ -146,6 +165,8 @@ var shaderFiles = [
 'glsl/scorch.fs.glsl',
 'glsl/eye.vs.glsl',
 'glsl/eye.fs.glsl',
+'glsl/laser.vs.glsl',
+'glsl/laser.fs.glsl',
 ];
 
 new THREE.SourceLoader().load(shaderFiles, function(shaders) {
@@ -164,6 +185,9 @@ new THREE.SourceLoader().load(shaderFiles, function(shaders) {
 
 	rightEyeMaterial.vertexShader = shaders['glsl/eye.vs.glsl'];
 	rightEyeMaterial.fragmentShader = shaders['glsl/eye.fs.glsl'];
+
+	laserMaterial.vertexShader = shaders['glsl/laser.vs.glsl'];
+	laserMaterial.fragmentShader = shaders['glsl/laser.fs.glsl'];
 });
 
 // LOAD OBJECTS
@@ -190,6 +214,9 @@ scorch.rotation.x = Math.PI / 2.0;
 var laserGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1, 16);
 for (let i = 0; i < laserGeometry.vertices.length; ++i)
 	laserGeometry.vertices[i].y += 0.5;
+var laser = new THREE.Mesh(laserGeometry, laserMaterial);
+scene.add(laser);
+laser.parent = worldFrame;
 
 // LISTEN TO KEYBOARD
 var keyboard = new THREEx.KeyboardState();
@@ -208,18 +235,20 @@ function checkKeyboard() {
 			magicPosition.value.x += 0.3;
 		}
 		if (keyboard.pressed("space")) {
+			magicActive.value = true;
 			// COMMENT IN TO CREATE NEW SCORCH MARKS
-			/*
 			var newScorch = scorch.clone();
 			newScorch.position.set(magicPosition.value.x, 0.1, magicPosition.value.z);
 			scene.add(newScorch);
-			*/
+		} else {
+			magicActive.value = false;
 		}
 
 	rightEyeMaterial.needsUpdate = true; // Tells three.js that some uniforms might have changed
 	leftEyeMaterial.needsUpdate = true;
 	wizardMaterial.needsUpdate = true; 
 	magicMaterial.needsUpdate = true;
+	laserMaterial.needsUpdate = true;
 }
 
 // SETUP UPDATE CALL-BACK

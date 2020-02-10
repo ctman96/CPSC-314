@@ -4,8 +4,11 @@
 out vec3 color;
 
 // HINT: YOU WILL NEED TWO UNIFORMS
+uniform vec3 offset;
+uniform vec3 magicPosition;
 
 #define MAX_EYE_DEPTH 0.05
+#define M_PI 3.1415926535897932384626433832795
 
 void main() {
   // Simple way to color the pupil where there is a concavity in the sphere
@@ -22,5 +25,39 @@ void main() {
   // HINT: ORDER OF MULTIPLICATION WILL BE IMPORTANT
 
   // Multiply each vertex by the model-view matrix and the projection matrix to get final vertex position
-  gl_Position = projectionMatrix * viewMatrix * S * vec4(position, 1.0);
+
+
+
+  // 1.a Translation to offset position
+  mat4 T = mat4(1.0, 0.0, 0.0, 0.0, 
+                0.0, 1.0, 0.0, 0.0, 
+                0.0, 0.0, 1.0, 0.0,  
+                offset, 1.0);
+
+  // 1.b -90 degree rotation to look forwards:
+  float r = -M_PI/2.0;
+  mat4 R = mat4(1.0, 0.0, 0.0, 0.0, 
+                0.0, cos(r), -sin(r), 0.0, 
+                0.0, sin(r), cos(r), 0.0,  
+                0.0, 0.0, 0.0, 1.0);
+
+  vec3 up = vec3(0.0,1.0,0.0);
+
+  vec3 lz = normalize(offset - magicPosition);          // Forward vector
+  vec3 lx = normalize(cross(up, lz));                   // Right vector
+  vec3 ly = cross(lz, lx);                              // Up vector
+  mat4 lookAt = mat4( lx, 0.0,
+                      ly, 0.0,
+                      lz, 0.0,
+                      0.0,0.0,0.0, 1.0);
+
+  // lookAt was originally off by 180 degrees. Feel like it maybe has to do with 'up', but couldn't figure out. So manually adjust the 180 degrees
+  float r2 = M_PI;
+  lookAt = lookAt * mat4( 1.0, 0.0, 0.0, 0.0, 
+                          0.0, cos(r2), -sin(r2), 0.0, 
+                          0.0, sin(r2), cos(r2), 0.0,  
+                          0.0, 0.0, 0.0, 1.0);
+
+
+  gl_Position = projectionMatrix * viewMatrix * T * lookAt * R * S * vec4(position, 1.0);
 }
