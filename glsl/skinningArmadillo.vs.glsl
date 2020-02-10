@@ -38,8 +38,11 @@ void main() {
                                 10.0, 5.0, -10.0, 1.0);
     
     // // WRITE CODE HERE FOR PART 2, Q2 (a)
-    // HINT : Linear combination of each T matrix with its respective weight to get the final transformation matrix.  
+    // HINT : Linear combination of each T matrix with its respective weight to get the final transformation matrix. 
+
+    // Weighted linear combination transformation matrices
+    mat4 TW =  (T[0] * weightBone1) + (T[1] * weightBone2);
     
-    gl_Position = projectionMatrix * viewMatrix * globalTranslation * vec4(position, 1.0); // REPLACE ME
+    gl_Position = projectionMatrix * viewMatrix * globalTranslation * TW * vec4(position, 1.0); // REPLACE ME
         
 }

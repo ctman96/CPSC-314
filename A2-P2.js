@@ -148,6 +148,7 @@ var magicPosition = {type: 'v3', value: new THREE.Vector3(0.0, 0.0, 0.0)};
 var offsetLEye = {type: 'v3', value: new THREE.Vector3(-0.6, 9.0, -6.5)};
 var offsetREye = {type: 'v3', value: new THREE.Vector3(0.6, 9.0, -6.5)};
 var offsetWand = {type: 'v3', value: new THREE.Vector3(-2.5, 7.9, -6.4)};
+var nodRotation = {type: 'f', value: 0.0};
 
 // MATERIALS: specifying uniforms and shaders
 var wizardMaterial = new THREE.ShaderMaterial({});
@@ -173,7 +174,11 @@ var rightEyeMaterial = new THREE.ShaderMaterial({});
 
 // PART (2.1)  
 // HINT : Pass a new uniform to the shader to determine the angle of rotation of the head
-var noddingArmadilloMaterial = new THREE.ShaderMaterial();
+var noddingArmadilloMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    rotation: nodRotation,
+  }
+});
 
 // PART (2.2) SKINNING
 // HINT : The necessary uniforms are already passed. you will only need to modify them 
@@ -267,6 +272,7 @@ loadOBJ('obj/armadillo.obj', noddingArmadilloMaterial, 1.0, -5.0, 5.0, 8.0, 0.0,
 
 // ADD SKINNING CODE HERE
 var angle = 0.0;
+var angle2 = 0.0;
 function setMatrices(angle)
 { 
   // BONE 1
@@ -279,11 +285,12 @@ function setMatrices(angle)
 
   // BONE 2
 
-  var Transform2 = new THREE.Matrix4();
-  
-  // WORK HERE FOR PART 2 Q2(b)
-  
-  TMatrices.value[1] = Transform2 ; 
+  var Transform2 = new THREE.Matrix4().copy(Transform1);          // Copy Parent
+  Transform2.multiply(boneMatrices[1]);                           // Frame
+  Transform2.multiply(new THREE.Matrix4().makeRotationX(angle2));  // Rotate X
+  Transform2.multiply(new THREE.Matrix4().makeRotationZ(angle2));  // Rotate Z
+  Transform2.multiply(inverseBindMatrices[1]);                    // Inverse Frame
+  TMatrices.value[1] = Transform2; 
   
   skinningArmadilloMaterial.needsUpdate = true;
 }
@@ -313,12 +320,24 @@ function checkKeyboard() {
 			*/
 		}
 
+    // Controls to move the armadillo's head   
+    if (keyboard.pressed("Z"))
+        nodRotation.value += 0.01;      
+    if (keyboard.pressed("X"))
+        nodRotation.value -= 0.01;     
+
   	// PART 2
 		if (keyboard.pressed("1")){
 			if (armadilloObject)
 				scene.add(armadilloObject);
 		}
-	// Controls to move the armadillo's lower body		
+    // Controls to move the armadillo's upper body    
+    if (keyboard.pressed("K"))
+        angle2 += 0.01;      
+    if (keyboard.pressed("J"))
+        angle2 -= 0.01;   
+
+    // Controls to move the armadillo's lower body		
 		if (keyboard.pressed("M"))
 		  	angle += 0.01;      
 		if (keyboard.pressed("N"))

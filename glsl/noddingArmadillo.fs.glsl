@@ -21,5 +21,5 @@ void main() {
   // SHADING IS CALCUATED BY TAKING THE DOT PRODUCT OF THE NORMAL AND LIGHT DIRECTION VECTORS
   
   float color = dot(interpolatedNormal, lightDirection);
-  out_FragColor = vec4(color, color, color, 1.0); // REPLACE ME
+  out_FragColor = vec4(color,color,color, 1.0); // REPLACE ME
 }
