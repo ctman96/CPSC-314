@@ -12,5 +12,5 @@ void main() {
 	
 	vec3 SpotColor = vec3(1.0, 1.0, 0.0);
 	
-	out_FragColor = vec4(TOTAL, 1.0);
+	out_FragColor = vec4(SpotColor, 1.0);
 }

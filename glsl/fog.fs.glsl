@@ -6,5 +6,5 @@ void main() {
 
 	// TODO: PART 1C
 
-	out_FragColor = vec4(TOTAL, 1.0);
+	out_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }
