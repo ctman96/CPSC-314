@@ -147,7 +147,15 @@ var bPhongMaterial = new THREE.ShaderMaterial({
 
 var anisotropicMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      // TODO: pass in the uniforms you need
+      ambientColor: ambientColorUniform,
+      lightColor: lightColorUniform,
+      lightDirection: lightDirectionUniform,
+      tangentDirection: tangentDirectionUniform,
+
+      kAmbient: kAmbientUniform,
+      kDiffuse: kDiffuseUniform,
+      kSpecular: kSpecularUniform,
+      shininess: shininessUniform,
     },
 });
 
