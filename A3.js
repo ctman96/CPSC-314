@@ -161,7 +161,14 @@ var anisotropicMaterial = new THREE.ShaderMaterial({
 
 var fogMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      // TODO: pass in the uniforms you need
+      ambientColor: ambientColorUniform,
+      lightColor: lightColorUniform,
+      lightDirection: lightDirectionUniform,
+      lightFogColor: lightFogColorUniform,
+
+      fogDensity,
+      kAmbient: kAmbientUniform,
+      kDiffuse: kDiffuseUniform,
     },
 });
 
