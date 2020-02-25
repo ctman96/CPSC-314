@@ -134,7 +134,14 @@ var betaUniform = {type: "f", value: goochBeta};
 
 var bPhongMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      // TODO: pass in the uniforms you need
+      ambientColor: ambientColorUniform,
+      lightColor: lightColorUniform,
+      lightDirection: lightDirectionUniform,
+
+      kAmbient: kAmbientUniform,
+      kDiffuse: kDiffuseUniform,
+      kSpecular: kSpecularUniform,
+      shininess: shininessUniform,
     },
 });
 
