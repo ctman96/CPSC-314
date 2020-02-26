@@ -38,10 +38,10 @@ void main() {
 	vec3 light_AMB = ambientColor * kAmbient;
 
 	//DIFFUSE
-	vec3 light_DFF = diffuse * lightColor * kDiffuse;
+	vec3 light_DFF = diffuse * lightColor * kDiffuse; // dif * lightColor * kDiffuse;
 
 	//SPECULAR
-	vec3 light_SPC = lightColor * dif + kSpecular * v; // TODO: This doesn't look right
+	vec3 light_SPC = vec3(kSpecular * v); // lightColor * dif + kSpecular * v;
 
 	//TOTAL
 	vec3 TOTAL = light_AMB + light_DFF + light_SPC;
