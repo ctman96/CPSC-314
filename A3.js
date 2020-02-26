@@ -114,7 +114,7 @@ var lightFogColorUniform = {type: "c", value: lightFogColor};
 var ambientColorUniform = {type: "c", value: ambientColor};
 var lightDirectionUniform = {type: "v3", value: lightDirection};
 var tangentDirectionUniform = {type: "v3", value: tangentDirection};
-var spotlightPosition = {type: "v3", value: spotlightPosition};
+var spotlightPositionUniform = {type: "v3", value: spotlightPosition};
 
 var kAmbientUniform = {type: "f", value: kAmbient};
 var kDiffuseUniform = {type: "f", value: kDiffuse};
@@ -122,6 +122,7 @@ var kSpecularUniform = {type: "f", value: kSpecular};
 var shininessUniform = {type: "f", value: shininess};
 var fogDensity = {type: "f", value: 0.1};
 var spotDirectPosition = {type: 'v3', value: new THREE.Vector3(0.0,0.0,0.0)};
+var spotlightCutoff = {type: "f", value: 70.0};
 
 var gDiffuseUniform = {type: "f", value: goochDiffuse};
 var gShininessUniform = {type: "f", value: goochShininess};
@@ -174,7 +175,9 @@ var fogMaterial = new THREE.ShaderMaterial({
 
 var spotlightMaterial = new THREE.ShaderMaterial({
   uniforms: {
-    // TODO: pass in the uniforms you need
+    spotlightPosition: spotlightPositionUniform,
+    spotDirectPosition,
+    spotlightCutoff,
   }
 });
 
@@ -402,6 +405,12 @@ function checkKeyboard() {
       spotDirectPosition.value.x -= 0.1;
     else if (keyboard.pressed("D"))
       spotDirectPosition.value.x += 0.1;
+
+
+    if (keyboard.pressed("N"))
+      spotlightCutoff.value -= 0.1;
+    else if (keyboard.pressed("M"))
+      spotlightCutoff.value += 0.1;
 
     spotlightMaterial.needsUpdate = true;
     bPhongMaterial.needsUpdate = true;
