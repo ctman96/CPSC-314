@@ -42,6 +42,7 @@ void main() {
 
 	//SPECULAR
 	vec3 light_SPC = lightColor * dif + kSpecular * v; // TODO: This doesn't look right
+
 	//TOTAL
 	vec3 TOTAL = light_AMB + light_DFF + light_SPC;
 	out_FragColor = vec4(TOTAL, 1.0);

@@ -31,8 +31,8 @@ void main() {
    	}
 
    	// change resultingColor to silhouette objects
-   	float edge = abs(dot(norm, toV));
-	if (edge < 0.4)
+   	float edge = dot(norm, toV);
+	if (edge < 0.5)
 		resultingColor = vec4(0.0, 0.0, 0.0, 1.0);
 
 	out_FragColor = resultingColor;

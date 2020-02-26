@@ -52,8 +52,8 @@ void main() {
     } 
 
    	// change resultingColor to silhouette objects
-   	float edge = abs(dot(norm, toV));
-	if (edge < 0.4)
+   	float edge = dot(norm, toV);
+	if (edge < 0.5)
 		resultingColor = black;
 
 	out_FragColor = resultingColor;
