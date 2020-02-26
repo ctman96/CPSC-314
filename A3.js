@@ -200,7 +200,7 @@ var goochMaterial = new THREE.ShaderMaterial({
 });
 var hatchMaterial = new THREE.ShaderMaterial({
   uniforms: {
-    // TODO: pass in the uniforms you need
+    lightDirection: lightDirectionUniform,
   },
 });
 
