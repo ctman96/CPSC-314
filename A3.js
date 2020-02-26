@@ -183,7 +183,7 @@ var spotlightMaterial = new THREE.ShaderMaterial({
 
 var toonMaterial = new THREE.ShaderMaterial({
   uniforms: {
-    // TODO: pass in the uniforms you need
+    lightDirection: lightDirectionUniform,
   },
 });
 var goochMaterial = new THREE.ShaderMaterial({
