@@ -188,7 +188,14 @@ var toonMaterial = new THREE.ShaderMaterial({
 });
 var goochMaterial = new THREE.ShaderMaterial({
   uniforms: {
-    // TODO: pass in the uniforms you need
+    lightDirection: lightDirectionUniform,
+    
+    goochDiffuse: gDiffuseUniform,
+    goochShininess: gShininessUniform,
+    goochBlue: blueUniform,
+    goochAlpha: alphaUniform,
+    goochYellow: yellowUniform,
+    goochBeta: betaUniform,
   },
 });
 var hatchMaterial = new THREE.ShaderMaterial({
