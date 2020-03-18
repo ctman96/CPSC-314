@@ -118,7 +118,11 @@ skyboxCubemap.format = THREE.RGBFormat;
 // Materials
 
 // Q1 HINT : Pass the uniforms - colorMap, normalMap, etc. to the floorMaterial
-var floorMaterial = new THREE.MeshPhongMaterial();
+var floorMaterial = new THREE.MeshPhongMaterial({
+  map: floorColorTexture,
+  normalMap: floorNormalTexture,
+  aoMap: floorAOTexture,
+});
 
 // Q2 HINT : Pass the uniforms for blinn-phong shading,
 // colorMap, normalMap etc to the shaderMaterial
@@ -129,6 +133,12 @@ var wizardMaterial = new THREE.ShaderMaterial({
     kDiffuse: kDiffuseUniform,
     lightDirection: lightDirectionUniform,
     // Add the other uniforms here
+    ambientColor: ambientColorUniform,
+    kAmbient: kAmbientUniform,
+    kSpecular: kSpecularUniform,
+    shininess: shininessUniform,
+    colorMap: { type: "t", value: wizardColorTexture, },
+    normalMap: { type: "t", value: wizardNormalTexture, },
   }
 });
 
