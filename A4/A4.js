@@ -111,6 +111,12 @@ var skyboxCubemap = new THREE.CubeTextureLoader()
   .setPath( 'images/' )
   .load( [
     // Q3 : Load the images for the sides of the cubemap here. Note that order is important
+    'negx.png', // Swapped these two cause they weren't lining up ...
+    'posx.png',
+    'posy.png',
+    'negy.png',
+    'posz.png',
+    'negz.png',
   ] );
 skyboxCubemap.format = THREE.RGBFormat;
 
@@ -143,7 +149,13 @@ var wizardMaterial = new THREE.ShaderMaterial({
 });
 
 // Q3 HINT : Pass the necessary uniforms (skybox and camera position)
-var skyboxMaterial = new THREE.ShaderMaterial({});
+var skyboxMaterial = new THREE.ShaderMaterial({
+  side: THREE.DoubleSide,
+  uniforms: {
+    skybox: { type: "t", value: skyboxCubemap, },
+    cameraPosition: cameraPositionUniform,
+  }
+});
 
 // Q4 HINT : Pass the necessary uniforms
 var envmapMaterial = new THREE.ShaderMaterial({});
@@ -207,7 +219,8 @@ terrain.rotation.set(- Math.PI / 2, 0, 0);
 scene.add(terrain);
 
 // Q3 :  create the geometry for the skybox and link it with the skyboxMaterial
-var skybox = new THREE.Mesh();
+var skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
+var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
 scene.add(skybox);
 
 // Q4 : Sphere for environment mapping 
