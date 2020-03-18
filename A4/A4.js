@@ -153,12 +153,17 @@ var skyboxMaterial = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   uniforms: {
     skybox: { type: "t", value: skyboxCubemap, },
-    cameraPosition: cameraPositionUniform,
   }
 });
 
 // Q4 HINT : Pass the necessary uniforms
-var envmapMaterial = new THREE.ShaderMaterial({});
+var envmapMaterial = new THREE.ShaderMaterial({
+  side: THREE.DoubleSide,
+  uniforms: {
+    skybox: { type: "t", value: skyboxCubemap, },
+    camPosition: cameraPositionUniform,
+  }
+});
 
 // Load shaders
 var shaderFiles = [
