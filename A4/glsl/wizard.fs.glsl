@@ -20,6 +20,11 @@ uniform sampler2D colorMap;
 uniform sampler2D normalMap;
 
 void main() {
+	// Q2: Normal from normal map? 
+    vec3 n = texture(normalMap, texcoord).rgb;
+    n = normalize(n * 2.0 - 1.0); /* https://learnopengl.com/Advanced-Lighting/Normal-Mapping */
+    // Doesn't work, think need to calculate tangent/blitangent
+
 	// SOME PRE-CALCS FOR BLINN PHONG LIGHTING
 	vec3 N = normalize(vcsNormal);
 	vec3 L = normalize(vec3(viewMatrix * vec4(lightDirection, 0.0)));
