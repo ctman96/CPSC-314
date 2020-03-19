@@ -48,6 +48,7 @@ light.target = worldFrame;
 // Q5 : This light source casts the shadows, set up this light source as the shadow camera
 // to be used for shadow mapping
 // WRITE YOUR CODE HERE
+light.castShadow = true;
 scene.add( light );
 
 var lightDirection = new THREE.Vector3();
@@ -56,11 +57,12 @@ lightDirection.sub(light.target.position);
 // Q5 : adjust the view frustum for the shadow camera to include the entire shadow of shay D Pixel, 
 // without being too large. Experiement with a few different values.
 // WRITE YOUR CODE HERE 
+light.shadow.camera.zoom = 0.5;
 
 // Q5 : Optional, but you can visualise the light and the frustum of the shadow camera to debug shadow mapping
 // uncomment the lines below
-// const lightHelper = new THREE.CameraHelper(light.shadow.camera);
-// scene.add(lightHelper);
+const lightHelper = new THREE.CameraHelper(light.shadow.camera);
+scene.add(lightHelper);
 
 // Main camera
 var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000); // view angle, aspect ratio, near, far
@@ -220,6 +222,7 @@ var terrainGeometry = new THREE.PlaneBufferGeometry(20, 20);
 var terrain = new THREE.Mesh(terrainGeometry, floorMaterial);
 // Q5 HINT: Enable the terrain to recieve shadows
 // here
+terrain.receiveShadow = true;
 terrain.rotation.set(- Math.PI / 2, 0, 0);
 scene.add(terrain);
 
