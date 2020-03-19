@@ -2,15 +2,11 @@
 
 out vec3 vcsNormal;
 out vec3 vcsPosition;
-out vec3 vcsCamera;
-
-uniform vec3 camPosition;
 
 void main() {
 	// viewing coordinate system
-	vcsNormal = normalMatrix * normal;
-	vcsPosition = vec3(modelViewMatrix * vec4(position, 1.0));
-	vcsCamera = vec3(viewMatrix * vec4(-camPosition, 0.0));
+	vcsNormal = mat3(transpose(inverse(modelMatrix))) * normal; // Normal in world frame
+	vcsPosition = vec3(modelMatrix * vec4(position, 1.0)); // Position in world frame
 
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }
