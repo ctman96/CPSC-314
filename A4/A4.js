@@ -155,6 +155,7 @@ var skyboxMaterial = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   uniforms: {
     skybox: { type: "t", value: skyboxCubemap, },
+    camPosition: cameraPositionUniform,
   }
 });
 
