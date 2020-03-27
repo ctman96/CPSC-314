@@ -48,7 +48,7 @@ light.target = worldFrame;
 // Q5 : This light source casts the shadows, set up this light source as the shadow camera
 // to be used for shadow mapping
 // WRITE YOUR CODE HERE
-light.castShadow = true;
+light.castShadow = true; // EXPL: Allow lightsource to cast shadows
 scene.add( light );
 
 var lightDirection = new THREE.Vector3();
@@ -57,11 +57,11 @@ lightDirection.sub(light.target.position);
 // Q5 : adjust the view frustum for the shadow camera to include the entire shadow of shay D Pixel, 
 // without being too large. Experiement with a few different values.
 // WRITE YOUR CODE HERE 
-light.shadow.camera.zoom = 0.5;
+light.shadow.camera.zoom = 0.5; // EXPL:Set the view fustrum. Found 0.5 to work well after trying a couple lower/higher values
 
 // Q5 : Optional, but you can visualise the light and the frustum of the shadow camera to debug shadow mapping
 // uncomment the lines below
-const lightHelper = new THREE.CameraHelper(light.shadow.camera);
+const lightHelper = new THREE.CameraHelper(light.shadow.camera); // EXPL: Add the debug visualization
 scene.add(lightHelper);
 
 // Main camera
@@ -113,7 +113,8 @@ var skyboxCubemap = new THREE.CubeTextureLoader()
   .setPath( 'images/' )
   .load( [
     // Q3 : Load the images for the sides of the cubemap here. Note that order is important
-    'negx.png', // Swapped these two cause they weren't lining up ...
+    // EXPL: Load in the sides in the order stated on three.js documentation
+    'negx.png', // EXPL: But swapped these two cause they weren't lining up ...
     'posx.png',
     'posy.png',
     'negy.png',
@@ -127,6 +128,7 @@ skyboxCubemap.format = THREE.RGBFormat;
 
 // Q1 HINT : Pass the uniforms - colorMap, normalMap, etc. to the floorMaterial
 var floorMaterial = new THREE.MeshPhongMaterial({
+  // EXPL: Set the material properties to the provided uniforms, according to three.js documentation
   map: floorColorTexture,
   normalMap: floorNormalTexture,
   aoMap: floorAOTexture,
@@ -141,6 +143,7 @@ var wizardMaterial = new THREE.ShaderMaterial({
     kDiffuse: kDiffuseUniform,
     lightDirection: lightDirectionUniform,
     // Add the other uniforms here
+    // EXPL: Pass in the necessary uniforms.
     ambientColor: ambientColorUniform,
     kAmbient: kAmbientUniform,
     kSpecular: kSpecularUniform,
@@ -152,7 +155,8 @@ var wizardMaterial = new THREE.ShaderMaterial({
 
 // Q3 HINT : Pass the necessary uniforms (skybox and camera position)
 var skyboxMaterial = new THREE.ShaderMaterial({
-  side: THREE.BackSide,
+  side: THREE.BackSide, // EXPL: Don't know if its necessary, but set it so only inside is displayed
+  // EXPL: Pass in necessary uniforms.
   uniforms: {
     skybox: { type: "t", value: skyboxCubemap, },
     camPosition: cameraPositionUniform,
@@ -163,6 +167,7 @@ var skyboxMaterial = new THREE.ShaderMaterial({
 var envmapMaterial = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   uniforms: {
+     // EXPL: Pass in necessary uniforms.
     skybox: { type: "t", value: skyboxCubemap, },
     camPosition: cameraPositionUniform,
   }
@@ -223,13 +228,13 @@ var terrainGeometry = new THREE.PlaneBufferGeometry(20, 20);
 var terrain = new THREE.Mesh(terrainGeometry, floorMaterial);
 // Q5 HINT: Enable the terrain to recieve shadows
 // here
-terrain.receiveShadow = true;
+terrain.receiveShadow = true;  // EXPL: Enable shadows to be cast on terrain
 terrain.rotation.set(- Math.PI / 2, 0, 0);
 scene.add(terrain);
 
 // Q3 :  create the geometry for the skybox and link it with the skyboxMaterial
-var skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
-var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+var skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000); // EXPL: Create box with dimensions as stated on piazza
+var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial); 
 scene.add(skybox);
 
 // Q4 : Sphere for environment mapping 

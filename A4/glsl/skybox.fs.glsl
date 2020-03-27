@@ -12,5 +12,5 @@ void main() {
 	// HINT : Sample the texture from the samplerCube object, rememeber that cubeMaps are sampled 
 	// using a direction vector that you calculated in the vertex shader 
 	
-	out_FragColor = texture(skybox, texDir);
+	out_FragColor = texture(skybox, texDir); // EXPL: Just sample the color from the texture
 }
