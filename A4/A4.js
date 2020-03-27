@@ -152,7 +152,7 @@ var wizardMaterial = new THREE.ShaderMaterial({
 
 // Q3 HINT : Pass the necessary uniforms (skybox and camera position)
 var skyboxMaterial = new THREE.ShaderMaterial({
-  side: THREE.DoubleSide,
+  side: THREE.BackSide,
   uniforms: {
     skybox: { type: "t", value: skyboxCubemap, },
     camPosition: cameraPositionUniform,
